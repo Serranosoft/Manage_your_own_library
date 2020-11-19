@@ -13,14 +13,17 @@ let booksArray = [];
 /* INPUTS */
 
 const bookTitle = document.querySelector(".book-title-modal");
+const avatarAuthor = document.querySelector(".book-avatar-modal");
 const bookAuthor = document.querySelector(".book-author-modal");
 const bookPages = document.querySelector(".book-pages-modal");
 
+
 /* CONSTRUCTOR */
 
-function Book(title, author, pages, readed) {
+function Book(title, author, img, pages, readed) {
     this.title = title;
     this.author = author;
+    this.img = img;
     this.pages = pages;
     this.readed = readed;
 }
@@ -39,12 +42,13 @@ modalClose.addEventListener("click", function () {
 })
 
 addBookButton.addEventListener("click", function () {
-    addBook(bookTitle.value, bookAuthor.value, parseInt(bookPages.value));
+    addBook(bookTitle.value, bookAuthor.value, avatarAuthor.value, parseInt(bookPages.value));
 });
 
 function clearForm() {
     bookTitle.value = "";
     bookAuthor.value = "";
+    avatarAuthor.value = "";
     bookPages.value = "";
 }
 
@@ -53,9 +57,9 @@ function closeModal() {
     bookModal.classList.remove("active");
 }
 
-function addBook(title, author, pages) {
+function addBook(title, author, img, pages) {
     if (title.length > 0 && author.length > 0 && pages >= 0) {
-        let book = new Book(title, author, pages, true);
+        let book = new Book(title, author, img, pages, false);
         booksArray.push(book);
 
         clearForm();
@@ -102,9 +106,15 @@ function render(booksArray) {
             render(booksArray);
         })
 
-        let bookImg = document.createElement("img");
-        bookImg.classList.add("book-img");
-        bookHeader.appendChild(bookImg);
+        let avatarAuthor = document.createElement("img");
+        avatarAuthor.classList.add("book-img");
+
+        // Check if extension of img is jpg or png
+        if(element.img.slice(-3).toLowerCase() == "jpg" || element.img.slice(-3).toLowerCase() == "png") {
+            avatarAuthor.setAttribute("style", `background: url('${element.img}');background-size:cover;`);
+        }
+
+        bookHeader.appendChild(avatarAuthor);
         
 
         let bookTitle = document.createElement("p");
