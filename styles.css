@@ -1,0 +1,287 @@
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: linear-gradient(to right, #0f2027, #143541, #1f485a);
+  font-family: "Roboto Slab", serif;
+}
+
+.title,
+.open-modal {
+  display: flex;
+  justify-content: center;
+}
+
+.title {
+  font-size: 28px;
+  color: white;
+}
+
+.open-modal {
+  width: 100px;
+  margin: 0 auto;
+  color: white;
+  font-size: 80px;
+  border: 2px solid white;
+  border-radius: 50%;
+  user-select: none;
+  cursor: pointer;
+  margin-top: 50px;
+  font-family: initial;
+}
+
+.open-modal:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #ECA400;
+  border-color: #ECA400;
+  box-shadow: 0 0 10px#ECA400;
+}
+
+.book-modal {
+  width: 350px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 10px;
+  font-family: "Pangolin", cursive;
+  display: none;
+}
+
+.book-modal.active {
+  display: block;
+}
+
+.modal-title {
+  margin-bottom: 20px;
+  border-bottom: 1px solid black;
+  padding: 10px;
+}
+
+.modal-title p {
+  margin-top: 15px;
+  font-size: 48px;
+  text-align: center;
+}
+
+.modal-close {
+  float: right;
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+form {
+  width: 100%;
+  font-size: 18px;
+}
+
+label {
+  margin-left: 35px;
+}
+
+input[placeholder] {
+  font-size: 18px;
+  text-align: center;
+  font-family: "Pangolin", cursive;
+}
+
+input[type="text"],
+input[type="number"] {
+  display: block;
+  margin: auto;
+  margin-bottom: 20px;
+  width: 80%;
+}
+
+input {
+  height: 30px;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+input[type="button"] {
+  display: block;
+  padding: 0 20px;
+  margin: 10px auto;
+  font-family: "Pangolin", cursive;
+  cursor: pointer;
+}
+
+input[type="button"]:hover {
+  color: green;
+  border-color: green;
+  box-shadow: 0 0 10px green;
+}
+
+#overlay {
+  position: fixed;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+
+#overlay.active {
+  pointer-events: all;
+  opacity: 1;
+}
+
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 10px;
+  margin-top: 50px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 150px;
+}
+
+.book {
+  user-select: none;
+  word-wrap: break-word;
+}
+
+.book-header {
+  background-color: #ECA400;
+  background-clip: padding-box;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  padding: 5px;
+  box-shadow: 0 0 10px black;
+  text-align: center;
+}
+
+.book-read-tick {
+  width: 20px;
+  height: 20px;
+  float: left;
+  margin-left: 10px;
+  background: url("images/not-readed.png");
+  background-size: cover;
+  border-radius: 50%;
+  border: 1px solid transparent;
+}
+
+.book-delete {
+  width: 10px;
+  display: block;
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-size: 18px;
+  font-weight: bold;
+  float: right;
+  margin-right: 10px;
+}
+
+.book-delete:hover {
+  color: rgb(238, 59, 59);
+}
+
+.book-img {
+  width: 50px;
+  height: 50px;
+  margin: auto;
+  display: block;
+  background: url("images/book-default.png") no-repeat;
+  background-size: cover;
+  border-radius: 50%;
+  outline: none;
+  border: 1px solid transparent;
+}
+
+.book-img:hover {
+  width: 150px;
+  height: 150px;
+}
+
+
+.book-title {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.book-author {
+  font-size: 12px;
+  text-decoration: underline;
+  margin-bottom: 10px;
+}
+
+.book-info {
+  background-color: white;
+  background-clip: padding-box;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  box-shadow: 0 0 10px black;
+  color: gray;
+  font-size: 16px;
+  text-align: start;
+}
+
+.book-info > * {
+  text-indent: 40px
+} 
+
+.book-pages {
+  padding: 10px;
+  border-bottom: 1px solid lightgray;
+}
+
+.book-readed {
+  padding: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, .2);
+}
+
+footer a {
+  float: right;
+}
+
+footer img {
+  margin: 10px;
+  width: 25px;
+}
+
+footer img:hover {
+  transform: scale(1.3);
+}

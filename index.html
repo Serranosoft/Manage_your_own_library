@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Library Project</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='styles.css'>
+    <link href="https://fonts.googleapis.com/css2?family=Pangolin&family=Roboto+Slab&display=swap" rel="stylesheet"> 
+
+</head>
+
+<body>
+
+
+    <div class="title">
+        <h1>Library App</h1>
+    </div>
+    <div class="open-modal">+</div>
+
+    <div class="book-modal">
+
+        <div class="modal-title">
+            <button class="modal-close">&times;</button>
+            <p>Add a book</p>
+            
+        </div>
+        
+        <form>
+            <label for="book-title-modal">Book title</label>
+            <input id="book-title-modal" type="text" class="book-title-modal" placeholder="The Hobbit" required>
+
+            <label for="book-author-modal">Book author</label>
+            <input id="book-author-modal" type="text" class="book-author-modal" placeholder="J.R.R Tolkien" required>
+
+            <label for="book-pages-modal">How many pages has this book?</label>
+            <input id="book-pages-modal" type="number" class="book-pages-modal" placeholder="125" required>
+
+            <input type="button" id="add-book" class="add-book-modal" value="Add Book">
+
+        </form>
+    </div>
+
+    <div class="books-grid">
+
+<!--         <div class="book">
+            <div class="book-header">
+                <div class="book-header-options"></div>
+                <img class="book-read-tick">
+                <span class="book-delete">&times;</span>
+                <img class="book-img">
+                <p class="book-title">Thomas Lowry</p>
+                <p class="book-author">Digital designer</p>
+            </div>
+            <div class="book-info">
+                <p class="book-pages">256 pages</p>
+                <p class="book-readed">Not readed</p>
+            </div>
+        </div> -->
+
+    </div>
+
+    <div id="overlay"></div>
+
+    <footer>
+        <a href="https://twitter.com/infoerrores">
+            <img src="https://camo.githubusercontent.com/46d6d505bc6e0db127bc4278bdee87475135c0ae78ffd4fd34288fe6606e3234/68747470733a2f2f7777772e666c617469636f6e2e65732f7376672f7374617469632f69636f6e732f7376672f3733332f3733333537392e737667">
+        </a>
+
+        <a href="https://facebook.com/profile.php?id=100007885786688">
+            <img src="https://camo.githubusercontent.com/4af7ec80f392be8f61e4d10852754760386aba87dff4067fbcf035895d073632/68747470733a2f2f7777772e666c617469636f6e2e65732f7376672f7374617469632f69636f6e732f7376672f3733332f3733333534372e737667">
+        </a>
+
+        <a href="https://instagram.com/manuuscholz">
+            <img src="https://camo.githubusercontent.com/7e3cfdff1a391329c36aad817efd05adccf97f8f45896d010c563750ba4dd1e3/68747470733a2f2f7777772e666c617469636f6e2e65732f7376672f7374617469632f69636f6e732f7376672f3137342f3137343835352e737667">
+        </a>
+
+        <a href="https://linkedin.com/in/manuel-serrano-scholz/">
+            <img src="https://camo.githubusercontent.com/00271c92f4d533d81d7ceaca31c2a160a86eba38f5db63134abe5c5050cb368a/68747470733a2f2f7777772e666c617469636f6e2e65732f7376672f7374617469632f69636f6e732f7376672f3137342f3137343835372e737667">
+        </a>
+
+        <a href="https://github.com/Serranosoft">
+            <img src="https://www.flaticon.es/svg/static/icons/svg/733/733609.svg">
+        </a>
+    </footer>
+
+
+
+
+
+</body>
+
+<script src='scripts.js'></script>
+
+</html>
