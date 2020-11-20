@@ -7,8 +7,11 @@ const addBookButton = document.getElementById("add-book");
 const booksGrid = document.querySelector(".books-grid");
 
 let booksArray = [];
+let id = 0;
+let storage = window.localStorage;
 
-/* render(booksArray); */
+getStorage(storage);
+render(booksArray);
 
 /* INPUTS */
 
@@ -20,7 +23,8 @@ const bookPages = document.querySelector(".book-pages-modal");
 
 /* CONSTRUCTOR */
 
-function Book(title, author, img, pages, readed) {
+function Book(id, title, author, img, pages, readed) {
+    this.id = id
     this.title = title;
     this.author = author;
     this.img = img;
@@ -59,8 +63,12 @@ function closeModal() {
 
 function addBook(title, author, img, pages) {
     if (title.length > 0 && author.length > 0 && pages >= 0) {
-        let book = new Book(title, author, img, pages, false);
+        id = checkId(booksArray);
+
+        let book = new Book(id, title, author, img, pages, false);
+
         booksArray.push(book);
+        storage.setItem(book.id, JSON.stringify(book));
 
         clearForm();
         closeModal();
@@ -68,7 +76,28 @@ function addBook(title, author, img, pages) {
     }
 }
 
+function checkId(booksArray) {
+    if (booksArray.length < 1) {
+        id = 0;
+    } else {
+        booksArray.forEach(element => {
+            if (element.id == id) {
+                id++
+            }
+        });
+    }
 
+    return id;
+}
+
+function getStorage(storage) {
+    for (let index = 0; index <= storage.length; index++) {
+        if (storage.getItem(index) != null) {
+            booksArray.push(JSON.parse(storage.getItem(index)));
+        }
+
+    }
+}
 
 function clearScreen() {
 
@@ -94,7 +123,7 @@ function render(booksArray) {
         let bookReadTick = document.createElement("img");
         bookReadTick.classList.add("book-read-tick");
         bookHeader.appendChild(bookReadTick);
-   
+
         let bookDelete = document.createElement("span");
         bookDelete.innerHTML = "&times"
         bookDelete.classList.add("book-delete");
@@ -103,6 +132,7 @@ function render(booksArray) {
 
         bookDelete.addEventListener("click", function () {
             booksArray.splice(booksArray.indexOf(element), 1);
+            storage.removeItem(element.id);
             render(booksArray);
         })
 
@@ -110,12 +140,12 @@ function render(booksArray) {
         avatarAuthor.classList.add("book-img");
 
         // Check if extension of img is jpg or png
-        if(element.img.slice(-3).toLowerCase() == "jpg" || element.img.slice(-3).toLowerCase() == "png") {
+        if (element.img.slice(-3).toLowerCase() == "jpg" || element.img.slice(-3).toLowerCase() == "png") {
             avatarAuthor.setAttribute("style", `background: url('${element.img}');background-size:cover;`);
         }
 
         bookHeader.appendChild(avatarAuthor);
-        
+
 
         let bookTitle = document.createElement("p");
         bookTitle.textContent = element.title;
@@ -140,23 +170,35 @@ function render(booksArray) {
         bookReaded.classList.add("book-readed");
         bookInfo.appendChild(bookReaded);
 
-        if(element.readed) {
+        if (element.readed) {
             bookReadTick.setAttribute("style", "background: url('images/readed.png');background-size:cover;")
             bookReaded.textContent = "Readed";
-        }else {
+        } else {
             bookReadTick.setAttribute("style", "background: url('images/not-readed.png');background-size:cover;");
             bookReaded.textContent = "Not readed";
         }
 
-        bookReadTick.addEventListener("click", function() {
-            if(element.readed == false) {
+        bookReadTick.addEventListener("click", function () {
+            if (element.readed == false) {
                 element.readed = true;
                 bookReadTick.setAttribute("style", "background: url('images/readed.png');background-size:cover;");
                 bookReaded.textContent = "Readed";
+
+                /* UPDATE IN LOCAL STORAGE */
+                storage.removeItem(element.id);
+                storage.setItem(element.id, JSON.stringify(element));
+                console.log(JSON.parse(storage.getItem(element.id)));
+
+
             } else {
                 element.readed = false;
                 bookReadTick.setAttribute("style", "background: url('images/not-readed.png');background-size:cover;");
                 bookReaded.textContent = "Not readed";
+
+                /* UPDATE IN LOCAL STORAGE */
+                storage.removeItem(element.id);
+                storage.setItem(element.id, JSON.stringify(element));
+                console.log(JSON.parse(storage.getItem(element.id)));
             }
         })
 

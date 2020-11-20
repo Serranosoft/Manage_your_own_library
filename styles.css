@@ -25,21 +25,21 @@ body {
 .open-modal {
   width: 100px;
   margin: 0 auto;
-  color: white;
-  font-size: 80px;
+  margin-top: 50px;
   border: 2px solid white;
   border-radius: 50%;
+  color: white;
+  font-family: initial;
+  font-size: 80px;
   user-select: none;
   cursor: pointer;
-  margin-top: 50px;
-  font-family: initial;
 }
 
 .open-modal:hover {
-  background-color: rgba(0, 0, 0, 0.2);
-  color: #ECA400;
   border-color: #ECA400;
   box-shadow: 0 0 10px#ECA400;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #ECA400;
 }
 
 .book-modal {
@@ -47,11 +47,11 @@ body {
   position: fixed;
   top: 50%;
   left: 50%;
+  border: 1px solid black;
+  border-radius: 10px;
   transform: translate(-50%, -50%);
   z-index: 10;
   background-color: white;
-  border: 1px solid black;
-  border-radius: 10px;
   font-family: "Pangolin", cursive;
   display: none;
 }
@@ -98,10 +98,10 @@ input[placeholder] {
 
 input[type="text"],
 input[type="number"] {
+  width: 80%;
   display: block;
   margin: auto;
   margin-bottom: 20px;
-  width: 80%;
 }
 
 input {
@@ -119,9 +119,9 @@ input[type="button"] {
 }
 
 input[type="button"]:hover {
-  color: green;
   border-color: green;
   box-shadow: 0 0 10px green;
+  color: green;
 }
 
 #overlay {
@@ -156,12 +156,12 @@ input[type="button"]:hover {
 }
 
 .book-header {
-  background-color: #ECA400;
-  background-clip: padding-box;
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
   padding: 5px;
   box-shadow: 0 0 10px black;
+  background-color: #ECA400;
+  background-clip: padding-box;
   text-align: center;
 }
 
@@ -170,22 +170,23 @@ input[type="button"]:hover {
   height: 20px;
   float: left;
   margin-left: 10px;
-  background: url("images/not-readed.png");
-  background-size: cover;
   border-radius: 50%;
   border: 1px solid transparent;
+  background: url("images/not-readed.png");
+  background-size: cover;
+  cursor: pointer;
 }
 
 .book-delete {
   width: 10px;
   display: block;
-  cursor: pointer;
+  float: right;
   border: none;
+  margin-right: 10px;
   background: none;
   font-size: 18px;
   font-weight: bold;
-  float: right;
-  margin-right: 10px;
+  cursor: pointer;
 }
 
 .book-delete:hover {
@@ -197,11 +198,10 @@ input[type="button"]:hover {
   height: 50px;
   margin: auto;
   display: block;
+  border: 1px solid transparent;
   background: url("images/book-default.png") no-repeat;
   background-size: cover;
   border-radius: 50%;
-  outline: none;
-  border: 1px solid transparent;
 }
 
 .book-img:hover {
@@ -216,17 +216,17 @@ input[type="button"]:hover {
 }
 
 .book-author {
+  margin-bottom: 10px;
   font-size: 12px;
   text-decoration: underline;
-  margin-bottom: 10px;
 }
 
 .book-info {
-  background-color: white;
-  background-clip: padding-box;
   border-bottom-left-radius: 30px;
   border-bottom-right-radius: 30px;
   box-shadow: 0 0 10px black;
+  background-color: white;
+  background-clip: padding-box;
   color: gray;
   font-size: 16px;
   text-align: start;
@@ -244,25 +244,6 @@ input[type="button"]:hover {
 .book-readed {
   padding: 10px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 footer {
   position: fixed;
