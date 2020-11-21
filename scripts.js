@@ -7,6 +7,7 @@ const addBookButton = document.getElementById("add-book");
 const booksGrid = document.querySelector(".books-grid");
 
 let booksArray = [];
+let ratesArray = [];
 let id = 0;
 let storage = window.localStorage;
 
@@ -23,13 +24,14 @@ const bookPages = document.querySelector(".book-pages-modal");
 
 /* CONSTRUCTOR */
 
-function Book(id, title, author, img, pages, readed) {
+function Book(id, title, author, img, pages, readed, rating) {
     this.id = id
     this.title = title;
     this.author = author;
     this.img = img;
     this.pages = pages;
     this.readed = readed;
+    this.rating = rating;
 }
 
 /* EVENTS */
@@ -65,7 +67,7 @@ function addBook(title, author, img, pages) {
     if (title.length > 0 && author.length > 0 && pages >= 0) {
         id = checkId(booksArray);
 
-        let book = new Book(id, title, author, img, pages, false);
+        let book = new Book(id, title, author, img, pages, false, 0);
 
         booksArray.push(book);
         storage.setItem(book.id, JSON.stringify(book));
@@ -93,11 +95,13 @@ function checkId(booksArray) {
 
 // Get local storage and push all content to booksArray
 function getStorage(storage) {
-    for (let index = 0; index <= storage.length; index++) {
-        if (storage.getItem(index) != null) {
-            booksArray.push(JSON.parse(storage.getItem(index)));
-        }
+    let storageLength = Object.keys(storage);
+    let i = storageLength.length;
 
+    while(i--) {
+        if(storage.getItem(storageLength[i]) != null) {
+            booksArray.push(JSON.parse(storage.getItem(storageLength[i])));
+        }
     }
 }
 
@@ -113,8 +117,8 @@ function clearScreen() {
 function validateImage(element, avatarAuthor) {
 
     if (
-        element.img.slice(-3).toLowerCase() === "jpg" || 
-        element.img.slice(-3).toLowerCase() === "png" || 
+        element.img.slice(-3).toLowerCase() === "jpg" ||
+        element.img.slice(-3).toLowerCase() === "png" ||
         element.img.slice(-4).toLowerCase() === "jpeg") {
         avatarAuthor.setAttribute("style", `background: url('${element.img}');background-size:cover;`);
     }
@@ -130,14 +134,35 @@ function updateStorage(element) {
 // check if element is read or not and show information
 function checkRead(element, readTick, readContent) {
 
-    if(element.readed) {
+    if (element.readed) {
         readTick.setAttribute("style", "background: url('images/readed.png');background-size:cover;")
         readContent.textContent = "Already readed";
-    }else {
+    } else {
         readTick.setAttribute("style", "background: url('images/not-readed.png');background-size:cover;");
         readContent.textContent = "Isn't read yet";
     }
 
+}
+
+function setRating(element, event) {
+    let nodeRating = event.target.parentNode.firstChild;
+    let nodeRatingAux = event.target.parentNode.firstChild;
+    for (let j = 0; j < 5; j++) {
+        if(nodeRatingAux.className === "ratingUp") {
+            nodeRatingAux.classList.remove("ratingUp");
+            nodeRatingAux.classList.add("ratingDown");
+        }
+        nodeRatingAux = nodeRatingAux.nextSibling;  
+    }
+    let x = event.target.id;
+
+    for(let i = 0; i < x; i++) {
+        nodeRating.classList.remove("ratingDown");
+        nodeRating.classList.add("ratingUp");
+        nodeRating = nodeRating.nextSibling;
+    }
+    element.rating = x;
+    updateStorage(element);
 }
 
 function render(booksArray) {
@@ -201,12 +226,12 @@ function render(booksArray) {
         bookReaded.classList.add("book-readed");
         bookInfo.appendChild(bookReaded);
 
-        
+
         checkRead(element, bookReadTick, bookReaded)
 
         bookReadTick.addEventListener("click", function () {
             if (element.readed == false) {
-                element.readed = true; 
+                element.readed = true;
             } else {
                 element.readed = false;
             }
@@ -214,6 +239,34 @@ function render(booksArray) {
             updateStorage(element);
         })
 
+        let bookRating = document.createElement("p");
+        bookRating.classList.add("book-rating");
+        bookInfo.appendChild(bookRating);
+
+        
+        for(let i = 1; i < 6; i++) {
+            rate = document.createElement("img");
+            rate.classList.add("ratingDown");
+            rate.setAttribute("id", i);
+            bookRating.appendChild(rate);
+            ratesArray.push(rate);
+
+            rate.addEventListener("click", function(event) {
+                setRating(element, event);
+            })
+
+        }
+
+        if(element.rating > 0) {
+            for(let j = 0; j < element.rating; j++) {
+                ratesArray[j].classList.remove("ratingDown");
+                ratesArray[j].classList.add("ratingUp");
+            }
+        }
+
+        ratesArray = [];
+
     })
+
 }
 

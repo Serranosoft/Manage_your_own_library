@@ -233,16 +233,37 @@ input[type="button"]:hover {
 }
 
 .book-info > * {
-  text-indent: 40px
+  text-indent: 40px;
+  padding: 10px;
 } 
 
-.book-pages {
-  padding: 10px;
+.book-pages, .book-readed {
   border-bottom: 1px solid lightgray;
 }
 
-.book-readed {
-  padding: 10px;
+.book-rating {
+
+}
+
+.ratingDown {
+  width: 20px;
+  height: 20px;
+  background: url("images/star-down.png");
+  background-size: cover;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  margin: 2px;
+}
+
+.ratingUp {
+  width: 20px;
+  height: 20px;
+  background: url("images/star-up.png");
+  background-size: cover;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  margin: 2px;
+
 }
 
 footer {
