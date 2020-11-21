@@ -76,6 +76,7 @@ function addBook(title, author, img, pages) {
     }
 }
 
+// Check if any ID is repeated and if so increment it
 function checkId(booksArray) {
     if (booksArray.length < 1) {
         id = 0;
@@ -90,6 +91,7 @@ function checkId(booksArray) {
     return id;
 }
 
+// Get local storage and push all content to booksArray
 function getStorage(storage) {
     for (let index = 0; index <= storage.length; index++) {
         if (storage.getItem(index) != null) {
@@ -99,11 +101,43 @@ function getStorage(storage) {
     }
 }
 
+// Clear all elements from screen to render the array from 0
 function clearScreen() {
 
     while (booksGrid.firstChild) {
         booksGrid.removeChild(booksGrid.firstChild);
     }
+}
+
+// Check if image extension is equal to jpg, png or jpeg
+function validateImage(element, avatarAuthor) {
+
+    if (
+        element.img.slice(-3).toLowerCase() === "jpg" || 
+        element.img.slice(-3).toLowerCase() === "png" || 
+        element.img.slice(-4).toLowerCase() === "jpeg") {
+        avatarAuthor.setAttribute("style", `background: url('${element.img}');background-size:cover;`);
+    }
+}
+
+// Update local storage removing the item and setting again with updated attributes
+function updateStorage(element) {
+
+    storage.removeItem(element.id);
+    storage.setItem(element.id, JSON.stringify(element));
+}
+
+// check if element is read or not and show information
+function checkRead(element, readTick, readContent) {
+
+    if(element.readed) {
+        readTick.setAttribute("style", "background: url('images/readed.png');background-size:cover;")
+        readContent.textContent = "Already readed";
+    }else {
+        readTick.setAttribute("style", "background: url('images/not-readed.png');background-size:cover;");
+        readContent.textContent = "Isn't read yet";
+    }
+
 }
 
 function render(booksArray) {
@@ -139,10 +173,7 @@ function render(booksArray) {
         let avatarAuthor = document.createElement("img");
         avatarAuthor.classList.add("book-img");
 
-        // Check if extension of img is jpg or png
-        if (element.img.slice(-3).toLowerCase() == "jpg" || element.img.slice(-3).toLowerCase() == "png") {
-            avatarAuthor.setAttribute("style", `background: url('${element.img}');background-size:cover;`);
-        }
+        validateImage(element, avatarAuthor);
 
         bookHeader.appendChild(avatarAuthor);
 
@@ -170,36 +201,17 @@ function render(booksArray) {
         bookReaded.classList.add("book-readed");
         bookInfo.appendChild(bookReaded);
 
-        if (element.readed) {
-            bookReadTick.setAttribute("style", "background: url('images/readed.png');background-size:cover;")
-            bookReaded.textContent = "Readed";
-        } else {
-            bookReadTick.setAttribute("style", "background: url('images/not-readed.png');background-size:cover;");
-            bookReaded.textContent = "Not readed";
-        }
+        
+        checkRead(element, bookReadTick, bookReaded)
 
         bookReadTick.addEventListener("click", function () {
             if (element.readed == false) {
-                element.readed = true;
-                bookReadTick.setAttribute("style", "background: url('images/readed.png');background-size:cover;");
-                bookReaded.textContent = "Readed";
-
-                /* UPDATE IN LOCAL STORAGE */
-                storage.removeItem(element.id);
-                storage.setItem(element.id, JSON.stringify(element));
-                console.log(JSON.parse(storage.getItem(element.id)));
-
-
+                element.readed = true; 
             } else {
                 element.readed = false;
-                bookReadTick.setAttribute("style", "background: url('images/not-readed.png');background-size:cover;");
-                bookReaded.textContent = "Not readed";
-
-                /* UPDATE IN LOCAL STORAGE */
-                storage.removeItem(element.id);
-                storage.setItem(element.id, JSON.stringify(element));
-                console.log(JSON.parse(storage.getItem(element.id)));
             }
+            checkRead(element, bookReadTick, bookReaded)
+            updateStorage(element);
         })
 
     })
