@@ -90,6 +90,13 @@ label {
   margin-left: 35px;
 }
 
+.error-input {
+  color: red;
+  font-weight: bold;
+  margin-left: 35px;
+  font-size: 12px;
+}
+
 input[placeholder] {
   font-size: 18px;
   text-align: center;
@@ -250,7 +257,6 @@ input[type="button"]:hover {
   height: 20px;
   background: url("images/star-down.png");
   background-size: cover;
-  border: 1px solid transparent;
   border-radius: 50%;
   margin: 2px;
 }
@@ -260,12 +266,14 @@ input[type="button"]:hover {
   height: 20px;
   background: url("images/star-up.png");
   background-size: cover;
-  border: 1px solid transparent;
   border-radius: 50%;
   margin: 2px;
-
 }
 
+.ratingDown:hover, .ratingUp:hover {
+  transform: scale(1.4);
+
+}
 footer {
   position: fixed;
   bottom: 0;

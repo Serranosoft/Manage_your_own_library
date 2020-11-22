@@ -21,6 +21,11 @@ const avatarAuthor = document.querySelector(".book-avatar-modal");
 const bookAuthor = document.querySelector(".book-author-modal");
 const bookPages = document.querySelector(".book-pages-modal");
 
+/* ERROR INPUTS */
+
+const bookTitleError = document.getElementById("error-title")
+const bookAuthorError = document.getElementById("error-author")
+const bookPagesError = document.getElementById("error-pages")
 
 /* CONSTRUCTOR */
 
@@ -64,7 +69,7 @@ function closeModal() {
 }
 
 function addBook(title, author, img, pages) {
-    if (title.length > 0 && author.length > 0 && pages >= 0) {
+    if (validateForm()) {
         id = checkId(booksArray);
 
         let book = new Book(id, title, author, img, pages, false, 0);
@@ -98,8 +103,8 @@ function getStorage(storage) {
     let storageLength = Object.keys(storage);
     let i = storageLength.length;
 
-    while(i--) {
-        if(storage.getItem(storageLength[i]) != null) {
+    while (i--) {
+        if (storage.getItem(storageLength[i]) != null) {
             booksArray.push(JSON.parse(storage.getItem(storageLength[i])));
         }
     }
@@ -148,15 +153,15 @@ function setRating(element, event) {
     let nodeRating = event.target.parentNode.firstChild;
     let nodeRatingAux = event.target.parentNode.firstChild;
     for (let j = 0; j < 5; j++) {
-        if(nodeRatingAux.className === "ratingUp") {
+        if (nodeRatingAux.className === "ratingUp") {
             nodeRatingAux.classList.remove("ratingUp");
             nodeRatingAux.classList.add("ratingDown");
         }
-        nodeRatingAux = nodeRatingAux.nextSibling;  
+        nodeRatingAux = nodeRatingAux.nextSibling;
     }
     let x = event.target.id;
 
-    for(let i = 0; i < x; i++) {
+    for (let i = 0; i < x; i++) {
         nodeRating.classList.remove("ratingDown");
         nodeRating.classList.add("ratingUp");
         nodeRating = nodeRating.nextSibling;
@@ -164,6 +169,36 @@ function setRating(element, event) {
     element.rating = x;
     updateStorage(element);
 }
+
+function validateForm() {
+    
+    if(bookTitle.value.length <= 1) {
+        bookTitleError.innerHTML = "Please enter a valid title"
+        return false;
+    }else{
+        bookTitleError.innerHTML = "";
+    }
+
+    if(bookAuthor.value.length <= 1) {
+        bookAuthorError.innerHTML = "Please enter a valid author"
+        return false;
+    }else {
+        bookAuthorError.innerHTML = "";
+    }
+
+   console.log(bookPages.value.indexOf("."));
+    if(bookPages.value < 1 || bookPages.value.indexOf(".") != -1) {
+        bookPagesError.innerHTML = "Please enter a valid number of pages"
+        return false;
+    }else {
+        bookPagesError.innerHTML = "";
+    }
+
+    if(bookTitle.value.length > 1 && bookAuthor.value.length > 1 && bookPages.value > 0 && bookPages.value.indexOf(".") == -1) {
+        return true;
+    }
+}
+
 
 function render(booksArray) {
 
@@ -243,22 +278,22 @@ function render(booksArray) {
         bookRating.classList.add("book-rating");
         bookInfo.appendChild(bookRating);
 
-        
-        for(let i = 1; i < 6; i++) {
+        for (let i = 1; i < 6; i++) {
             rate = document.createElement("img");
             rate.classList.add("ratingDown");
             rate.setAttribute("id", i);
+            rate.src = "http://www-cdr.stanford.edu/~petrie/blank.gif";
             bookRating.appendChild(rate);
             ratesArray.push(rate);
 
-            rate.addEventListener("click", function(event) {
+            rate.addEventListener("click", function (event) {
                 setRating(element, event);
             })
 
         }
 
-        if(element.rating > 0) {
-            for(let j = 0; j < element.rating; j++) {
+        if (element.rating > 0) {
+            for (let j = 0; j < element.rating; j++) {
                 ratesArray[j].classList.remove("ratingDown");
                 ratesArray[j].classList.add("ratingUp");
             }
