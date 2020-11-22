@@ -2,7 +2,7 @@
 const openModal = document.querySelector(".open-modal");
 const overlay = document.getElementById("overlay");
 const bookModal = document.querySelector(".book-modal");
-const modalClose = document.querySelector(".modal-close");
+const closeModal = document.querySelector(".modal-close");
 const addBookButton = document.getElementById("add-book");
 const booksGrid = document.querySelector(".books-grid");
 
@@ -11,7 +11,7 @@ let ratesArray = [];
 let id = 0;
 let storage = window.localStorage;
 
-getStorage(storage);
+getLocalStorage(storage);
 render(booksArray);
 
 /* INPUTS */
@@ -39,33 +39,24 @@ function Book(id, title, author, img, pages, readed, rating) {
     this.rating = rating;
 }
 
-/* EVENTS */
+openModal.addEventListener("click", () => toggleModal());
+closeModal.addEventListener("click", () => toggleModal());
 
-openModal.addEventListener("click", function () {
-    overlay.classList.add("active");
-    bookModal.classList.add("active");
-})
-
-modalClose.addEventListener("click", function () {
-    clearForm();
-    closeModal();
-
-})
-
-addBookButton.addEventListener("click", function () {
+addBookButton.addEventListener("click", () => {
     addBook(bookTitle.value, bookAuthor.value, avatarAuthor.value, parseInt(bookPages.value));
 });
 
-function clearForm() {
-    bookTitle.value = "";
-    bookAuthor.value = "";
-    avatarAuthor.value = "";
-    bookPages.value = "";
-}
 
-function closeModal() {
-    overlay.classList.remove("active");
-    bookModal.classList.remove("active");
+function toggleModal() {
+    if (overlay.className === "active" && bookModal.className === "book-modal active") {
+        document.getElementById("modal-form").reset();
+        overlay.classList.remove("active");
+        bookModal.classList.remove("active");
+    } else {
+        overlay.classList.add("active");
+        bookModal.classList.add("active");
+    }
+
 }
 
 function addBook(title, author, img, pages) {
@@ -77,8 +68,7 @@ function addBook(title, author, img, pages) {
         booksArray.push(book);
         storage.setItem(book.id, JSON.stringify(book));
 
-        clearForm();
-        closeModal();
+        toggleModal();
         render(booksArray);
     }
 }
@@ -99,7 +89,7 @@ function checkId(booksArray) {
 }
 
 // Get local storage and push all content to booksArray
-function getStorage(storage) {
+function getLocalStorage(storage) {
     let storageLength = Object.keys(storage);
     let i = storageLength.length;
 
@@ -171,30 +161,29 @@ function setRating(element, event) {
 }
 
 function validateForm() {
-    
-    if(bookTitle.value.length <= 1) {
+
+    if (bookTitle.value.length <= 1) {
         bookTitleError.innerHTML = "Please enter a valid title"
         return false;
-    }else{
+    } else {
         bookTitleError.innerHTML = "";
     }
 
-    if(bookAuthor.value.length <= 1) {
+    if (bookAuthor.value.length <= 1) {
         bookAuthorError.innerHTML = "Please enter a valid author"
         return false;
-    }else {
+    } else {
         bookAuthorError.innerHTML = "";
     }
 
-   console.log(bookPages.value.indexOf("."));
-    if(bookPages.value < 1 || bookPages.value.indexOf(".") != -1) {
+    if (bookPages.value < 1 || bookPages.value.indexOf(".") != -1) {
         bookPagesError.innerHTML = "Please enter a valid number of pages"
         return false;
-    }else {
+    } else {
         bookPagesError.innerHTML = "";
     }
 
-    if(bookTitle.value.length > 1 && bookAuthor.value.length > 1 && bookPages.value > 0 && bookPages.value.indexOf(".") == -1) {
+    if (bookTitle.value.length > 1 && bookAuthor.value.length > 1 && bookPages.value > 0 && bookPages.value.indexOf(".") == -1) {
         return true;
     }
 }
@@ -282,7 +271,7 @@ function render(booksArray) {
             rate = document.createElement("img");
             rate.classList.add("ratingDown");
             rate.setAttribute("id", i);
-            rate.src = "http://www-cdr.stanford.edu/~petrie/blank.gif";
+            rate.src = "images/blank.gif";
             bookRating.appendChild(rate);
             ratesArray.push(rate);
 
@@ -292,6 +281,7 @@ function render(booksArray) {
 
         }
 
+        // Draw book's rating
         if (element.rating > 0) {
             for (let j = 0; j < element.rating; j++) {
                 ratesArray[j].classList.remove("ratingDown");

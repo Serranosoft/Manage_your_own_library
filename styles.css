@@ -36,10 +36,10 @@ body {
 }
 
 .open-modal:hover {
-  border-color: #ECA400;
+  border-color: #eca400;
   box-shadow: 0 0 10px#ECA400;
   background-color: rgba(0, 0, 0, 0.2);
-  color: #ECA400;
+  color: #eca400;
 }
 
 .book-modal {
@@ -167,7 +167,7 @@ input[type="button"]:hover {
   border-top-right-radius: 30px;
   padding: 5px;
   box-shadow: 0 0 10px black;
-  background-color: #ECA400;
+  background-color: #eca400;
   background-clip: padding-box;
   text-align: center;
 }
@@ -216,7 +216,6 @@ input[type="button"]:hover {
   height: 150px;
 }
 
-
 .book-title {
   font-weight: bold;
   font-size: 20px;
@@ -242,22 +241,22 @@ input[type="button"]:hover {
 .book-info > * {
   text-indent: 40px;
   padding: 10px;
-} 
+}
 
-.book-pages, .book-readed {
+.book-pages,
+.book-readed {
   border-bottom: 1px solid lightgray;
 }
 
 .book-rating {
-
+  border: 0;
 }
 
 .ratingDown {
   width: 20px;
   height: 20px;
-  background: url("images/star-down.png");
+  background: url("images/star-down.png") repeat;
   background-size: cover;
-  border-radius: 50%;
   margin: 2px;
 }
 
@@ -270,9 +269,9 @@ input[type="button"]:hover {
   margin: 2px;
 }
 
-.ratingDown:hover, .ratingUp:hover {
+.ratingDown:hover,
+.ratingUp:hover {
   transform: scale(1.4);
-
 }
 footer {
   position: fixed;
@@ -280,7 +279,7 @@ footer {
   left: 0;
   width: 100%;
   padding: 10px;
-  background-color: rgba(0, 0, 0, .2);
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 footer a {
